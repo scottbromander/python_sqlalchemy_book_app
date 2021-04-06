@@ -1,4 +1,6 @@
 from models import (Base, session, Book, engine)
+import datetime
+import csv
 
 # import models
 # main menu - add, search, analysis, exit, view
@@ -29,6 +31,12 @@ def menu():
 # data cleaning
 # loop that runs the program
 
+def add_csv():
+    with open('suggested_books.csv') as csvfile:
+        data = csv.reader(csvfile)
+        for row in data:
+            print(row)
+
 def app():
     app_running = True
     while app_running:
@@ -51,4 +59,5 @@ def app():
 
 if __name__ == '__main__':
     Base.metadata.create_all(engine)
-    app()
+    # app()
+    add_csv()

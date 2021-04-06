@@ -5,6 +5,14 @@ import csv
 # import models
 # main menu - add, search, analysis, exit, view
 
+def clean_date(date_str):
+    months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+    split_date = date_str.split(' ')
+    month = int(months.index(split_date[0]) + 1)
+    day = int(split_date[1].split(',')[0])
+    year = int(split_date[2])
+    return datetime.date(year, month, day)
+
 def menu():
     while True:
         print('''
@@ -37,6 +45,9 @@ def add_csv():
         for row in data:
             print(row)
 
+
+
+
 def app():
     app_running = True
     while app_running:
@@ -60,4 +71,5 @@ def app():
 if __name__ == '__main__':
     Base.metadata.create_all(engine)
     # app()
-    add_csv()
+    # add_csv()
+    clean_date('October 25, 2017')

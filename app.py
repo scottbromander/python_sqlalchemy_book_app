@@ -48,13 +48,17 @@ def add_csv():
     with open('suggested_books.csv') as csvfile:
         data = csv.reader(csvfile)
         for row in data:
-            print(row)
-            title = row[0]
-            author = row[1]
-            date = clean_date(row[2])
-            price = clean_price(row[3])
-            new_book = Book(title=title, author=author, published_date=date, price=price)
-            session.add(new_book)
+            book_in_db = session.query(Book).filter(Book.title==row[0]).one_or_none()
+            if book_in_db == None:
+                print(row)
+                title = row[0]
+                author = row[1]
+                date = clean_date(row[2])
+                price = clean_price(row[3])
+                new_book = Book(title=title, author=author, published_date=date, price=price)
+                session.add(new_book)
+            else:
+                print('Already haz that book')
         session.commit()
 
 def app():

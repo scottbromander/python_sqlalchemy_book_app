@@ -8,10 +8,21 @@ import csv
 def clean_date(date_str):
     months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
     split_date = date_str.split(' ')
-    month = int(months.index(split_date[0]) + 1)
-    day = int(split_date[1].split(',')[0])
-    year = int(split_date[2])
-    return datetime.date(year, month, day)
+    try:
+        month = int(months.index(split_date[0]) + 1)
+        day = int(split_date[1].split(',')[0])
+        year = int(split_date[2])
+        return_date = datetime.date(year, month, day)
+    except ValueError:
+        input('''
+              \n*****''')
+        pass
+    else:
+        return return_date
+
+
+
+    return
 
 def clean_price(price_str):
     price_float = float(price_str)
@@ -67,6 +78,12 @@ def app():
         choice = menu()
         if choice == '1':
             # add book
+            title = input('Title: ')
+            author = input('Author: ')
+            date = input('Published Date (Ex: October 25, 2017): ')
+            date = clean_date(date)
+            price = input('Price (Ex: 25.99):')
+            price = clean_price(price)
             pass
         elif choice == '2':
             # view books

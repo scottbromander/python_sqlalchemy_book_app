@@ -15,8 +15,12 @@ def clean_date(date_str):
         return_date = datetime.date(year, month, day)
     except ValueError:
         input('''
-              \n*****''')
-        pass
+              \n***** DATE ERROR *****
+              \rThe date format should include a valid Month, Day, Year from the past.
+              \rEx: January 13th, 2003
+              \rPress enter to try again
+              \r**********************''')
+        return
     else:
         return return_date
 
@@ -80,8 +84,14 @@ def app():
             # add book
             title = input('Title: ')
             author = input('Author: ')
-            date = input('Published Date (Ex: October 25, 2017): ')
-            date = clean_date(date)
+
+            date_error = True
+            while date_error:
+                date = input('Published Date (Ex: October 25, 2017): ')
+                date = clean_date(date)
+                if type(date) == datetime.date:
+                    date_error = False
+
             price = input('Price (Ex: 25.99):')
             price = clean_price(price)
             pass

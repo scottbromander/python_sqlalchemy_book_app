@@ -1,6 +1,7 @@
 from models import (Base, session, Book, engine)
 import datetime
 import csv
+import time
 
 # import models
 # main menu - add, search, analysis, exit, view
@@ -106,6 +107,9 @@ def app():
             new_book = Book(title=title, author=author, published_date=date, price=price)
             session.add(new_book)
             session.commit()
+            print('Book added!')
+            # Pauses program for 1.5 seconds!
+            time.sleep(1.5)
 
         elif choice == '2':
             # view books

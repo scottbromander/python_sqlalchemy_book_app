@@ -24,14 +24,18 @@ def clean_date(date_str):
     else:
         return return_date
 
-
-
-    return
-
 def clean_price(price_str):
-    price_float = float(price_str)
-    print(price_float)
-    return int(price_float * 100)
+    try:
+        price_float = float(price_str)
+    except ValueError:
+        input('''
+              \n***** PRICE ERROR *****
+              \rThe price format should be a number without a currency symbol.
+              \rEx: 10.99
+              \rPress enter to try again
+              \r**********************''')
+    else:
+        return int(price_float * 100)
 
 def menu():
     while True:
@@ -92,9 +96,17 @@ def app():
                 if type(date) == datetime.date:
                     date_error = False
 
-            price = input('Price (Ex: 25.99):')
-            price = clean_price(price)
-            pass
+            price_error = True
+            while price_error:
+                price = input('Price (Ex: 25.99): ')
+                price = clean_price(price)
+                if type(price) == int:
+                    price_error = False
+
+            new_book = Book(title=title, author=author, published_date=date, price=price)
+            session.add(new_book)
+            session.commit()
+
         elif choice == '2':
             # view books
             pass
@@ -110,8 +122,8 @@ def app():
 
 if __name__ == '__main__':
     Base.metadata.create_all(engine)
-    # app()
     add_csv()
+    app()
     # clean_date('October 25, 2017')
 
     for book in session.query(Book):

@@ -78,12 +78,22 @@ def menu():
                   \rA number from 1-5
                   \rPress any key to see the options again.''')
 
-# add books to the database
-# edit books
-# delete books
-# search function
-# data cleaning
-# loop that runs the program
+def sub_menu():
+    while True:
+        print('''
+                \nEDIT BOOK
+                \r1) Edit
+                \r2) Delete
+                \r3) Return to main menu
+                ''')
+        choice = input('What would you like to do? ')
+        if choice in ['1','2','3']:
+            return choice
+        else:
+            input('''
+                  \nPlease choose one of the options above.
+                  \rA number from 1-3
+                  \rPress any key to see the options again.''')
 
 def add_csv():
     with open('suggested_books.csv') as csvfile:
@@ -158,7 +168,16 @@ def app():
                    \n{the_book.title} by {the_book.author}
                    \rPublished: {the_book.published_date}
                    \rPrice: ${the_book.price / 100}\n''')
-            input('Press enter to return to main menu')
+
+            sub_choice = sub_menu()
+
+            if sub_choice == '1':
+                # edit
+                pass
+            elif choice == '2':
+                # delete
+                pass
+
 
         elif choice == '4':
             # book analysis

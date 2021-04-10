@@ -154,10 +154,11 @@ def app():
                     id_error = False
 
             the_book = session.query(Book).filter(Book.id == id_choice).first()
-            input(f'''
+            print(f'''
                    \n{the_book.title} by {the_book.author}
                    \rPublished: {the_book.published_date}
                    \rPrice: ${the_book.price / 100}\n''')
+            input('Press enter to return to main menu')
 
         elif choice == '4':
             # book analysis

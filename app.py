@@ -38,18 +38,26 @@ def clean_price(price_str):
     else:
         return int(price_float * 100)
 
-def clean_id(id_str):
+def clean_id(id_str, options):
     try:
         book_id = int(id_str)
     except ValueError:
         input('''
-              \n***** PRICE ERROR *****
+              \n***** INPUT ERROR *****
               \rThe id format should be a number.
               \rPress enter to try again
               \r**********************''')
         return
     else:
-        return book_id
+        if book_id in options:
+            return book_id
+        else:
+            input('''
+                  \n***** INPUT ERROR *****
+                  \rThe id entered was not in range
+                  \rPress enter to try again
+                  \r**********************''')
+            return
 
 def menu():
     while True:
@@ -141,7 +149,7 @@ def app():
                 id_choice = input(f'''
                                   \nId Options: {id_options}
                                   \rBook id: ''')
-                id_choice = clean_id(id_choice)
+                id_choice = clean_id(id_choice, id_options)
                 if type(id_choice) == int:
                     id_error = False
 

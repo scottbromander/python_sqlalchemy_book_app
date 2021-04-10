@@ -38,6 +38,19 @@ def clean_price(price_str):
     else:
         return int(price_float * 100)
 
+def clean_id(id_str):
+    try:
+        book_id = int(id_str)
+    except ValueError:
+        input('''
+              \n***** PRICE ERROR *****
+              \rThe id format should be a number.
+              \rPress enter to try again
+              \r**********************''')
+        return
+    else:
+        return book_id
+
 def menu():
     while True:
         print('''
@@ -119,7 +132,19 @@ def app():
 
         elif choice == '3':
             # search for book
-            pass
+            id_options = []
+            for book in session.query(Book):
+                id_options.append(book.id)
+
+            id_error = True
+            while id_error:
+                id_choice = input(f'''
+                                  \nId Options: {id_options}
+                                  \rBook id: ''')
+                id_choice = clean_id(id_choice)
+                if type(id_choice) == int:
+                    id_error = False
+
         elif choice == '4':
             # book analysis
             pass

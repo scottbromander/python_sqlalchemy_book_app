@@ -205,7 +205,10 @@ def app():
 
             elif choice == '2':
                 # delete
-                pass
+                session.delete(the_book)
+                session.commit()
+                print('Book deleted!')
+                time.sleep(1.5)
 
 
         elif choice == '4':

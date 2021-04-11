@@ -59,6 +59,29 @@ def clean_id(id_str, options):
                   \r**********************''')
             return
 
+def edit_check(column_name, current_value):
+    print(f'''\n**** EDIT {column_name} ****''')
+    if column_name == 'Price':
+        print(f'\nCurrent Value: {current_value/100}')
+    elif column_name == 'Date':
+        print(f'\rCurrent Value: {current_value.strftime("%B %d %Y")}')
+    else:
+        print(f'Current Value: {current_value}')
+
+    if column_name == 'Date' or column_name == 'Price':
+        while True:
+            changes = input('What would you like to change the value to? ')
+            if column_name == 'Date':
+                changes = clean_date(changes)
+                if type(changes) == datetime.date:
+                    return changes
+            elif column_name == 'Price':
+                changes = clean_price(changes)
+                if type(changes) == int:
+                    return changes
+    else:
+        return input('What would you like to change the value to? ')
+
 def menu():
     while True:
         print('''
@@ -164,16 +187,19 @@ def app():
                     id_error = False
 
             the_book = session.query(Book).filter(Book.id == id_choice).first()
-            print(f'''
-                   \n{the_book.title} by {the_book.author}
+            print(f'''\n{the_book.title} by {the_book.author}
                    \rPublished: {the_book.published_date}
-                   \rPrice: ${the_book.price / 100}\n''')
+                   \rPrice: ${the_book.price / 100}''')
 
             sub_choice = sub_menu()
 
             if sub_choice == '1':
                 # edit
-                pass
+                the_book.title = edit_check('Title', the_book.title)
+                the_book.author = edit_check('Author', the_book.author)
+                the_book.published_date = edit_check('Date', the_book.published_date)
+                the_book.price = edit_check('Price', the_book.price)
+                print(session.dirty)
             elif choice == '2':
                 # delete
                 pass

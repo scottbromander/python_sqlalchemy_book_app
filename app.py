@@ -199,7 +199,10 @@ def app():
                 the_book.author = edit_check('Author', the_book.author)
                 the_book.published_date = edit_check('Date', the_book.published_date)
                 the_book.price = edit_check('Price', the_book.price)
-                print(session.dirty)
+                session.commit()
+                print('Book updated!')
+                time.sleep(1.5)
+
             elif choice == '2':
                 # delete
                 pass
